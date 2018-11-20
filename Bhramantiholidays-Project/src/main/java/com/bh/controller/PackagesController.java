@@ -52,6 +52,11 @@ public class PackagesController {
 		return packagesService.deletePackage(packageId);
 	}
 	
+	@RequestMapping(value = "/updatePackage", method = RequestMethod.PUT )
+	public String updatePackage(@RequestBody PackageDetails packageDetails){
+		return packagesService.updatePackage(packageDetails);
+	}
+	
 	
 	
 	

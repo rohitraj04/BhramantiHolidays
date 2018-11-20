@@ -37,7 +37,7 @@ public class PackagesServiceImpl implements PackagesService{
 	@Override
 	public String updatePackage(PackageDetails packageDetails) {
 		// TODO Auto-generated method stub
-		return null;
+		return packageDao.updatePackage(packageDetails);
 	}
 
 	@Override

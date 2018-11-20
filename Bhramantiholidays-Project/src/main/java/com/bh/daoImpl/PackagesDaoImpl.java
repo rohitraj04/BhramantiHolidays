@@ -19,7 +19,7 @@ import com.bh.model.UserDetails;
 @Transactional
 public class PackagesDaoImpl implements PackagesDao {
 
-	double pp = 0.0;
+	double pp = 0;
 	@Autowired
 	private SessionFactory sessionFactory;
 	int totalnumber = 0;
@@ -28,14 +28,15 @@ public class PackagesDaoImpl implements PackagesDao {
 		return sessionFactory.getCurrentSession();
 	}
 
-	protected double PromoPrice(double basePrice, float discount) {
+	protected double PromoPrice(double basePrice, double discount) {
 		double promoPrice = basePrice - ((discount / 100) * basePrice);
 		return promoPrice;
 	}
 
 	@Override
 	public List<Packages> showPackage(int packageId) {
-		List<Packages> packages = getSession().createQuery("from PACKAGES where packageId = ?").setParameter(0, packageId).list();
+		List<Packages> packages = getSession().createQuery("from PACKAGES where packageId = ?")
+				.setParameter(0, packageId).list();
 		List<Packages> ppp = new ArrayList<Packages>();
 		for (Packages p : ppp) {
 			ppp.add(p);
@@ -48,7 +49,7 @@ public class PackagesDaoImpl implements PackagesDao {
 
 		try {
 			if (packageDetails.getPackagePrice() > 0) {
-				if (packageDetails.getPackageDiscount() < 100 || packageDetails.getPackageDiscount() == 100 ) {
+				if (packageDetails.getPackageDiscount() < 100 || packageDetails.getPackageDiscount() == 100) {
 					pp = PromoPrice(packageDetails.getPackagePrice(), packageDetails.getPackageDiscount());
 					Packages packages = new Packages();
 					packages.setPackageName(packageDetails.getPackageName());
@@ -60,8 +61,7 @@ public class PackagesDaoImpl implements PackagesDao {
 					getSession().save(packages);
 
 					return "Added";
-				}
-				else{
+				} else {
 					return "Descount % should be 100 or lessthan 100";
 				}
 			}
@@ -69,13 +69,37 @@ public class PackagesDaoImpl implements PackagesDao {
 			ee.getMessage();
 		}
 		return "base price should be greeter than 0";
-		
+
 	}
 
 	@Override
 	public String updatePackage(PackageDetails packageDetails) {
-		// TODO Auto-generated method stub
-		return null;
+		String id = getSession().createQuery("SELECT packageId FROM PACKAGES WHERE packageName = ?")
+				.setParameter(0, packageDetails.getPackageName()).list().toString();
+		System.out.println("package id : " + id);
+		if (id.equals("[]")) {
+			return "Package is not added";
+		}
+		if (packageDetails.getPackagePrice() > 0) {
+			if (packageDetails.getPackageDiscount() < 100 || packageDetails.getPackageDiscount() == 100) {
+				double ppp = PromoPrice(packageDetails.getPackagePrice(), packageDetails.getPackageDiscount());
+				String idd = id.substring(1, id.length() - 1);
+				int iddd = Integer.parseInt(idd);
+				getSession()
+						.createQuery(
+								"UPDATE PACKAGES SET packageName = ?, packageDetail= ?,packagePrice = ?, packageDiscount = ?, packagePromoPrice = ? WHERE packageId = ? ")
+						.setParameter(0, packageDetails.getPackageName())
+						.setParameter(1, packageDetails.getPackageDetail())
+						.setParameter(2, packageDetails.getPackagePrice())
+						.setParameter(3, packageDetails.getPackageDiscount())
+						.setParameter(4, ppp).setParameter(5, iddd)
+						.executeUpdate();
+
+				return "Updated";
+			}
+		}
+
+		return "base price should be greeter than 0";
 	}
 
 	@Override
@@ -94,7 +118,7 @@ public class PackagesDaoImpl implements PackagesDao {
 	@Override
 	public Packages showPackage1(int packageId) {
 		Packages package1;
-		package1= (Packages)getSession().get(Package.class, packageId);
+		package1 = (Packages) getSession().get(Package.class, packageId);
 		System.out.println(package1.getPackageName());
 		return package1;
 	}

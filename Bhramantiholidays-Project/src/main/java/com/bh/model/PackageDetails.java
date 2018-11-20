@@ -5,7 +5,7 @@ public class PackageDetails {
 	private String packageName;
 	private String packageDetail;
 	private double packagePrice;
-	private float packageDiscount;
+	private double packageDiscount;
 	public String getPackageName() {
 		return packageName;
 	}
@@ -24,10 +24,10 @@ public class PackageDetails {
 	public void setPackagePrice(double packagePrice) {
 		this.packagePrice = packagePrice;
 	}
-	public float getPackageDiscount() {
+	public double getPackageDiscount() {
 		return packageDiscount;
 	}
-	public void setPackageDiscount(float packageDiscount) {
+	public void setPackageDiscount(double packageDiscount) {
 		this.packageDiscount = packageDiscount;
 	}
 	
