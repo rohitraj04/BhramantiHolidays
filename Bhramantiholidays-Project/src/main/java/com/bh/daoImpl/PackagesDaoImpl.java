@@ -34,14 +34,10 @@ public class PackagesDaoImpl implements PackagesDao {
 	}
 
 	@Override
-	public List<Packages> showPackage(int packageId) {
+	public Packages showPackage(int packageId) {
 		List<Packages> packages = getSession().createQuery("from PACKAGES where packageId = ?")
 				.setParameter(0, packageId).list();
-		List<Packages> ppp = new ArrayList<Packages>();
-		for (Packages p : ppp) {
-			ppp.add(p);
-		}
-		return packages;
+		return packages.get(0);
 	}
 
 	@Override
@@ -110,9 +106,11 @@ public class PackagesDaoImpl implements PackagesDao {
 	}
 
 	@Override
-	public List<Package> showAllPackage() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Packages> showAllPackage() {
+		List<Packages> packages = getSession().createQuery("from PACKAGES")
+				.list();
+		return packages;
+		
 	}
 
 	@Override

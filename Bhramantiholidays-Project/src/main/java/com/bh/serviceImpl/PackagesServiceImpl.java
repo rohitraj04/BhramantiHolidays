@@ -17,13 +17,13 @@ public class PackagesServiceImpl implements PackagesService{
 	private PackagesDao packageDao;
 
 	@Override
-	public List<Package> showAllPackage() {
+	public List<Packages> showAllPackage() {
 		// TODO Auto-generated method stub
-		return null;
+		return packageDao.showAllPackage();
 	}
 
 	@Override
-	public List<Packages> showPackage(int packageId) {
+	public Packages showPackage(int packageId) {
 		// TODO Auto-generated method stub
 		return packageDao.showPackage(packageId);
 	}

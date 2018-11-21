@@ -39,8 +39,8 @@ public class PackagesController {
 		return new ResponseEntity<String>(packagesService.addPackage(packageDetails), HttpStatus.CREATED);
 	}
 	@RequestMapping(value= "/showPackage/{packageId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Packages>> showPackage(@PathVariable("packageId") int packageId){
-		return new ResponseEntity<List<Packages>>(packagesService.showPackage(packageId), HttpStatus.OK);
+	public ResponseEntity<Packages> showPackage(@PathVariable("packageId") int packageId){
+		return new ResponseEntity<Packages>(packagesService.showPackage(packageId), HttpStatus.OK);
 	}
 	@RequestMapping(value= "/showPackage1/{packageId}", method = RequestMethod.GET)
 	public ResponseEntity<Packages> showPackage1(@PathVariable("packageId") int packageId){
@@ -55,6 +55,11 @@ public class PackagesController {
 	@RequestMapping(value = "/updatePackage", method = RequestMethod.PUT )
 	public String updatePackage(@RequestBody PackageDetails packageDetails){
 		return packagesService.updatePackage(packageDetails);
+	}
+	
+	@RequestMapping(value="/allPackages", method = RequestMethod.GET)
+	public ResponseEntity<List<Packages>> showAllPackages(){
+		return new ResponseEntity<List<Packages>>(packagesService.showAllPackage(), HttpStatus.OK);
 	}
 	
 	
