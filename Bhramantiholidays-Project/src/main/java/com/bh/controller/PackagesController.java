@@ -17,6 +17,7 @@ import com.bh.model.Packages;
 import com.bh.service.PackagesService;
 
 @RestController
+@RequestMapping(value="/packages/")
 public class PackagesController {
 	
 	@Autowired
